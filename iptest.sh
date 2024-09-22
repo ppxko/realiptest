@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# 默认最大并行进程数
+# 默认最大并行进程数、输入文件和输出文件
 max_parallel=100
+input_file="ip.txt"
+output_file="realip.txt"
 
 # 解析命令行参数
 while [[ $# -gt 0 ]]; do
@@ -15,17 +17,30 @@ while [[ $# -gt 0 ]]; do
                 exit 1
             fi
             ;;
+        -i)
+            if [[ -n $2 ]]; then
+                input_file=$2
+                shift 2
+            else
+                echo "Error: -i requires a valid file path"
+                exit 1
+            fi
+            ;;
+        -o)
+            if [[ -n $2 ]]; then
+                output_file=$2
+                shift 2
+            else
+                echo "Error: -o requires a valid file path"
+                exit 1
+            fi
+            ;;
         *)
-            echo "Usage: $0 [-mp max_parallel]"
+            echo "Usage: $0 [-mp max_parallel] [-i input_file] [-o output_file]"
             exit 1
             ;;
     esac
 done
-
-# 定义输入和输出文件
-input_file="ip.txt"
-output_file="realip.txt"
-current_jobs=0  # 当前并行进程数
 
 # 清空输出文件
 > $output_file
@@ -45,7 +60,7 @@ test_ip() {
     fi
 }
 
-# 读取ip.txt中的每一行
+# 读取指定的输入文件中的每一行
 while IFS=: read -r ip port; do
     # 调用测试函数并在后台执行
     test_ip "$ip" "$port" &
