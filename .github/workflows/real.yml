@@ -1,0 +1,36 @@
+name: 'GitHub Actions '
+
+on:
+  workflow_dispatch:
+  schedule:
+   - cron: '0 14 * * *'
+jobs:
+  ddy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set time zone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Shanghai"
+          timezoneMacos: "Asia/Shanghai"
+          timezoneWindows: "China Standard Time"
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: 'Working'
+        # timeout-minutes: 360
+        run: |
+          wget -O ip.txt  https://raw.githubusercontent.com/ppxko/find-x/refs/heads/main/fancy/real_ip.txt
+          chmod +x ./meta_iptest.sh
+          bash ./meta_iptest.sh
+      - name: Commit files          
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "⌚️$(date +%Y%m%d%H%M%S)" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          # github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}          
