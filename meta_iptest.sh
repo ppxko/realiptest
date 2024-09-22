@@ -59,8 +59,8 @@ test_ip() {
         echo "Success: $ip:$port"
         # 调用第二次测试
         second_test_ip "$ip" "$port"
-    else
-        echo "Failed: $ip:$port"
+  #  else
+   #     echo "Failed: $ip:$port"
     fi
 }
 
@@ -77,8 +77,8 @@ second_test_ip() {
         latency_value=${latency#timems=}
         echo "$ip,$port,$latency_value" >> $csv_file
         echo "Latency: $ip:$port = $latency_value ms"
-    else
-        echo "Latency test failed for $ip:$port"
+   # else
+       # echo "Latency test failed for $ip:$port"
     fi
 }
 
