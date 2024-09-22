@@ -24,9 +24,11 @@ jobs:
           bash ./meta_iptest.sh
       - name: Push changes
         run: |
+          eval $(ssh-agent -s)
+          ssh-add <(echo "${{ secrets.SSH_PRIVATE_KEY }}")
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "⌚️$(date +%Y%m%d%H%M%S)" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/ppxko/realiptest.git HEAD:main
+          git push git@github.com:ppxko/realiptest.git HEAD:main
 
