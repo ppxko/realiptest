@@ -19,9 +19,9 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
       - name: 'Working'
-        # timeout-minutes: 360
+        # timeout-minutes: 360 https://raw.githubusercontent.com/ppxko/find-x/refs/heads/main/fancy/real_ip.txt
         run: |
-          wget -O ip.txt  https://raw.githubusercontent.com/ppxko/find-x/refs/heads/main/fancy/real_ip.txt
+          wget -O ip.txt  ${{ secrets.real }}
           chmod +x ./meta_iptest.sh
           bash ./meta_iptest.sh
       - name: Push changes
