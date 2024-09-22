@@ -22,14 +22,14 @@ jobs:
           wget -O ip.txt  https://raw.githubusercontent.com/ppxko/find-x/refs/heads/main/fancy/real_ip.txt
           chmod +x ./meta_iptest.sh
           bash ./meta_iptest.sh
-      - name: Commit files          
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git status
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "⌚️$(date +%Y%m%d%H%M%S)" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/ppxko/realiptest.git HEAD:main
+
         with:
           # github_token: ${{ secrets.GH_TOKEN }}
           github_token: ${{ secrets.PAT_TOKEN }}
