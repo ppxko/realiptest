@@ -30,7 +30,3 @@ jobs:
           git commit -m "⌚️$(date +%Y%m%d%H%M%S)" || echo "No changes to commit"
           git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/ppxko/realiptest.git HEAD:main
 
-        with:
-          # github_token: ${{ secrets.GH_TOKEN }}
-          github_token: ${{ secrets.PAT_TOKEN }}
-          branch: main
