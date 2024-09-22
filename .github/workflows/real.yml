@@ -14,8 +14,10 @@ jobs:
           timezoneLinux: "Asia/Shanghai"
           timezoneMacos: "Asia/Shanghai"
           timezoneWindows: "China Standard Time"
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
       - name: 'Working'
         # timeout-minutes: 360
         run: |
