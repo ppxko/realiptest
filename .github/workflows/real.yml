@@ -24,13 +24,13 @@ jobs:
           bash ./meta_iptest.sh
       - name: Commit files          
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add .
           git status
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "⌚️$(date +%Y%m%d%H%M%S)" -a
-            git push
-          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          # github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.PAT_TOKEN }}
+          branch: ${{ github.ref }}
